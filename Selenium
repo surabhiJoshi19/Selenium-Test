@@ -17,20 +17,38 @@ public class LoginUsingSelenium {
         System.setProperty("webdriver.chrome.driver", "path of driver");
         WebDriver driver=new ChromeDriver();
         driver.manage().window().maximize();
-        driver.get("http://182.74.238.209/clarion_promise_qa/index.php");
+        driver.get("http://182.74.238.221/clarion_promise_qa/home.php");
+        WebElement login=driver.findElement(By.xpath("//input[@type='Submit']"));
         
-        WebElement username=driver.findElement(By.id("username"));
-        WebElement password=driver.findElement(By.id("password"));
-        WebElement login=driver.findElement(By.xpath("//button[text()='Sign in']"));
+        login.click();
+        String actual_msg=driver.findElement(By.name("frmViewKeyword")).getText();
+        String expect= "Invalid Username/password";
+        Assert assertEquals(actual_msg, expect);
+
+
+        WebElement username=driver.findElement(By.xpath("//input[@name='txtUsername']"));
+        WebElement password=driver.findElement(By.xpath("//input[@name='txtPassword']));
+        WebElement login=driver.findElement(By.xpath("//input[@type='Submit']"));
         
         username.sendKeys("sanjeetk@clariontechnologies.co.in");
         password.sendKeys("clarion");
         login.click();
         
-        String actualUrl="https://www.linkedin.com/feed/";
+        String actualUrl="http://182.74.238.221/clarion_promise_qa/home.php";
         String expectedUrl= driver.getCurrentUrl();
         
         Assert.assertEquals(expectedUrl,actualUrl);
+
+        driver.findElemnt(By.linkText("Log Promise")).click();
+        Select drop-down = new Select(driver.findElement(By.xpath("//input[@name='cboEmp']")));
+        dropdown.SelectByVisibleText("Sonali test");
+        WebElement enterPromise= driver.findElement(By.id("txtPromise"));
+        enterPromise.sendKeys("This promise is for testing");
+        driver.findElement(By.id("btnSubmit")).click();
+        Select dropdown2=new Select(driver.findElement(By.id("cboEmp")));
+        dropdown2.SelectByVisibleText("Sonali test");
+        driver.findElement(By.xpath("//input[@name='btnSearch']")).click();
+        driver.findElement(By.linkText("LOGOUT")).click();
         
         
     }
