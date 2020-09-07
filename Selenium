@@ -1,0 +1,38 @@
+//This code is written on Notepad as I am not holding any laptop with me currently.i'll me receiving my laptop within 10-15 days.
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+import org.openqa.selenium.support.ui.select;
+ 
+public class LoginUsingSelenium {
+ 
+    @Test
+    public void login() {
+        // TODO Auto-generated method stub
+        
+        System.setProperty("webdriver.chrome.driver", "path of driver");
+        WebDriver driver=new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.get("http://182.74.238.209/clarion_promise_qa/index.php");
+        
+        WebElement username=driver.findElement(By.id("username"));
+        WebElement password=driver.findElement(By.id("password"));
+        WebElement login=driver.findElement(By.xpath("//button[text()='Sign in']"));
+        
+        username.sendKeys("sanjeetk@clariontechnologies.co.in");
+        password.sendKeys("clarion");
+        login.click();
+        
+        String actualUrl="https://www.linkedin.com/feed/";
+        String expectedUrl= driver.getCurrentUrl();
+        
+        Assert.assertEquals(expectedUrl,actualUrl);
+        
+        
+    }
+ 
+}
